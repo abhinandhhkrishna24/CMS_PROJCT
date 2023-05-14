@@ -5,8 +5,10 @@ from rest_framework.permissions import AllowAny, IsAuthenticatedOrReadOnly
 from rest_framework.response import Response
 from django.shortcuts import get_object_or_404
 from .models import  Post, Like , AccoutUser
-from .permissions import IsOwnerOrReadOnly # <-- Add this line
+from .permissions import IsAdminUserOrReadOnly # <-- Add this line
 from .serializers import AccountUserSerializer, PostSerializer, LikeSerializer 
+
+
 
 
 class UserListCreateView(generics.ListCreateAPIView):
@@ -19,6 +21,7 @@ class UserRetrieveUpdateDestroyView(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = AccountUserSerializer
     queryset = AccoutUser.objects.all()
     lookup_field = 'username'
+
 
 
 class PostListCreateView(LoginRequiredMixin, generics.ListCreateAPIView):
@@ -37,7 +40,7 @@ class PostListCreateView(LoginRequiredMixin, generics.ListCreateAPIView):
 
 class PostRetrieveUpdateDestroyView(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = PostSerializer
-    permission_classes = [IsAuthenticatedOrReadOnly, IsOwnerOrReadOnly]
+    permission_classes = [IsAuthenticatedOrReadOnly, IsAdminUserOrReadOnly]
 
     def get_queryset(self):
         if self.request.user.is_authenticated:
