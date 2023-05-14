@@ -9,8 +9,6 @@ from .permissions import IsOwnerOrReadOnly # <-- Add this line
 from .serializers import AccountUserSerializer, PostSerializer, LikeSerializer 
 
 
-
-
 class UserListCreateView(generics.ListCreateAPIView):
     permission_classes = [AllowAny]
     serializer_class = AccountUserSerializer
@@ -21,7 +19,6 @@ class UserRetrieveUpdateDestroyView(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = AccountUserSerializer
     queryset = AccoutUser.objects.all()
     lookup_field = 'username'
-
 
 
 class PostListCreateView(LoginRequiredMixin, generics.ListCreateAPIView):
